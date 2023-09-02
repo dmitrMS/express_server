@@ -12,23 +12,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
   const message = req.query.message;
 
-  if (typeof message === "string") {
-    res.json({message: message});
-  } else {
-    res.status(422).json(`error`);
+  if (message === undefined) {
+    res.status(422).json({ error: `'${message}' was not provided` });
+    return;
   }
+
+  res.json({ message: message });
 });
 
 app.post("/", (req, res) => {
   const message = req.body.message;
 
-  if (typeof message === "string") {
-    res.json({message: message});
-  } else {
-
-    console.log(typeof message);
-    res.status(422).json({"error": `'${message}' was not a string`});
+  if (message === undefined) {
+    res.status(422).json({ error: `'${message}' was not provided` });
+    return;
   }
+
+  if (typeof message !== "string") {
+    res.status(422).json({ error: `'${message}' was not a string` });
+    return;
+  }
+  
+  res.json({ message: message });
 });
 
 app.listen(port, () => {
