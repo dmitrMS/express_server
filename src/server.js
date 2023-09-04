@@ -24,12 +24,12 @@ app.post("/", (req, res) => {
   const message = req.body.message;
 
   if (message === undefined) {
-    res.status(422).json({ error: `'${message}' was not provided` });
+    res.status(422).json({ "error": `'${message}' was not provided` });
     return;
   }
 
   if (typeof message !== "string") {
-    res.status(422).json({ error: `'${message}' was not a string` });
+    res.status(422).json({ "error": `'${message}' was not a string` });
     return;
   }
   
