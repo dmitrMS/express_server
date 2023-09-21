@@ -1,40 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const winston = require('winston');
-const expressWinston = require('express-winston');
+const logger = require('./logger');
 require('dotenv').config();
 
 const host = 'localhost';
 const port = process.env.SERVER_PORT || 8000;
-const log = process.env.LOGGER_TYPE || 'text';
 
 const app = express();
-var myLogger = function (req, res, next) {
-  const startTime = Date.now();
-  res.on('finish', function () {
-    console.log(
-      req.method,
-      decodeURI(req.url),
-      res.statusCode,
-      Date.now() - startTime
-    );
-  });
-  next();
-};
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-if (log === 'json') {
-  app.use(
-    expressWinston.logger({
-      transports: [new winston.transports.Console()],
-      format: winston.format.prettyPrint()
-    })
-  );
-}
-if (log === 'text') {
-  app.use(myLogger);
-}
+app.use(logger);
 
 app.get('/', (req, res) => {
   const message = req.query.message;
