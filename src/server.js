@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('./logger');
 require('dotenv').config();
-
 const host = 'localhost';
 const port = process.env.SERVER_PORT || 8000;
 
