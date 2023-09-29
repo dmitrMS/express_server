@@ -1,12 +1,11 @@
-const fetch = require('node-fetch');
-
-require('dotenv').config();
-
-const port = process.env.SERVER_PORT || 8000;
+import fetch from 'node-fetch';
+import { cfg } from './config.js';
 
 // test get method
 test('get method: message: true', async () => {
-  const response = await fetch(`http://localhost:${port}?message=true`);
+  const response = await fetch(
+    `http://localhost:${cfg.server.port}?message=true`
+  );
   const json = await response.json();
 
   expect(json).toStrictEqual({ message: 'true' });
@@ -14,7 +13,7 @@ test('get method: message: true', async () => {
 });
 
 test('get method: message: undefined', async () => {
-  const response = await fetch(`http://localhost:${port}?`);
+  const response = await fetch(`http://localhost:${cfg.server.port}?`);
   const json = await response.json();
 
   expect(json).toStrictEqual({ error: "'undefined' was not provided" });
@@ -31,7 +30,10 @@ test('post method: message: "true"', async () => {
     },
     body: JSON.stringify({ message: 'true' })
   };
-  const response = await fetch(`http://localhost:${port}`, requestOptions);
+  const response = await fetch(
+    `http://localhost:${cfg.server.port}`,
+    requestOptions
+  );
   const json = await response.json();
 
   expect(json).toStrictEqual({ message: 'true' });
@@ -47,7 +49,10 @@ test('post method: message: 123', async () => {
     },
     body: JSON.stringify({ message: 123 })
   };
-  const response = await fetch(`http://localhost:${port}`, requestOptions);
+  const response = await fetch(
+    `http://localhost:${cfg.server.port}`,
+    requestOptions
+  );
   const json = await response.json();
 
   expect(json).toEqual({ error: "'123' was not a string" });
@@ -63,7 +68,10 @@ test('post method: message: undefined', async () => {
     },
     body: JSON.stringify({})
   };
-  const response = await fetch(`http://localhost:${port}`, requestOptions);
+  const response = await fetch(
+    `http://localhost:${cfg.server.port}`,
+    requestOptions
+  );
   const json = await response.json();
 
   expect(json).toEqual({ error: "'undefined' was not provided" });
@@ -79,7 +87,10 @@ test('post method: message: true', async () => {
     },
     body: JSON.stringify({ message: true })
   };
-  const response = await fetch(`http://localhost:${port}`, requestOptions);
+  const response = await fetch(
+    `http://localhost:${cfg.server.port}`,
+    requestOptions
+  );
   const json = await response.json();
 
   expect(json).toEqual({ error: "'true' was not a string" });

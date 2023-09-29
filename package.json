@@ -5,11 +5,12 @@
   "main": "express_server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint .",
     "prettier-format": "prettier --config .prettierrc '.' --write",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
   },
+  "type": "module",
   "author": "Dmitry",
   "license": "ISC",
   "dependencies": {

@@ -7,6 +7,8 @@ module.exports = {
   plugins: ['jest', 'prettier'],
   extends: ['eslint:recommended', 'plugin:jest/recommended', 'prettier'],
   parserOptions: {
+    sourceType: 'module',
+    allowImportExportEverywhere: true,
     ecmaVersion: 'latest'
   },
   rules: { 'prettier/prettier': 2 }

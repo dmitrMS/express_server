@@ -1,15 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const logger = require('./logger');
-require('dotenv').config();
-const host = 'localhost';
-const port = process.env.SERVER_PORT || 8000;
+import express from 'express';
+import bodyParser from 'body-parser';
+import { cfg } from './config.js';
+import { logger, logMiddleware } from './logger.js';
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(logger);
+app.use(logMiddleware);
 
 app.get('/', (req, res) => {
   const message = req.query.message;
@@ -38,6 +36,9 @@ app.post('/', (req, res) => {
   res.json({ message });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://${host}:${port}`);
+app.listen(cfg.server.port, () => {
+  logger.info(`Server is running `, {
+    host: cfg.server.host,
+    port: cfg.server.port
+  });
 });
